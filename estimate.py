@@ -22,4 +22,4 @@ file = open("teta.csv", "r")
 reader = csv.reader(file)
 teta = next(reader)
 
-print("Estimated price:", estimatePrice(mileage, teta), "€")
+print("Estimated price:", float(teta[0]) + (float(teta[1]) * float(mileage)), "€")
