@@ -1,5 +1,5 @@
 import csv
-from estimatePrice import estimatePrice
+import numpy as np
 
 def isValid(value):
     return value.replace('.', '', 1).isdigit()
@@ -20,6 +20,9 @@ while (isValid(mileage) == False):
 file = open("teta.csv", "r")
 
 reader = csv.reader(file)
-teta = next(reader)
+teta = np.array(next(reader)).astype(np.float)
+norm = np.array(next(reader)).astype(np.float)
+mileage = float(mileage)
 
-print("Estimated price:", float(teta[0]) + (float(teta[1]) * float(mileage)), "€")
+print("Estimated price:",
+      teta[0] + teta[1] * ((mileage - norm[0]) / (norm[1] - norm[0])), "€")
