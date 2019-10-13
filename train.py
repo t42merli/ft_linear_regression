@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 
-print("Training model...")
+print("Training model...\n")
 
 data = pd.read_csv('data.csv')
 mileage = np.array(data['km'])
@@ -15,24 +15,32 @@ price = np.array(data['price'])
 learningRate = 0.1
 m = mileage.size
 
-tetha0 = 0
-tetha1 = 0
+theta0 = 0
+theta1 = 0
 sumerror = 1
 while(np.absolute(sumerror) > 0.0001):
-    estimatePrice = tetha0 + tetha1 * normMA
+    estimatePrice = theta0 + theta1 * normMA
     sumerror = np.sum(estimatePrice - price)
-    tetha0 = tetha0 - learningRate * (sumerror / m)
-    tetha1 = tetha1 - learningRate * \
+    theta0 = theta0 - learningRate * (sumerror / m)
+    theta1 = theta1 - learningRate * \
         (np.sum((estimatePrice - price) * normMA) / m)
 
-print("New tethas: ")
-print("tetha0:", tetha0, "tetha1:", tetha1)
+print("New thetas: ")
+print("theta0:", theta0, "theta1:", theta1)
+print("\nSaving thetas and normlization ratio in model.csv...\n")
+
+file = open("model.csv", "w")
+csvWriter = csv.writer(file)
+csvWriter.writerow([theta0, theta1])
+csvWriter.writerow([min, max])
+file.close()
+print("Done. Here is a graph of the estimation function after training:")
 
 y_plot = []
 x_plot = []
 i = 0
 while (i < 300000):
-    res = tetha0 + tetha1 * (i - min) / (max - min)
+    res = theta0 + theta1 * (i - min) / (max - min)
     y_plot.append(res)
     x_plot.append(i)
     i += 1000

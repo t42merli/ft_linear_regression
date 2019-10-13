@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 
+
 def isValid(value):
     return value.replace('.', '', 1).isdigit()
 
@@ -17,7 +18,7 @@ while (isValid(mileage) == False):
     if(isValid(mileage) == False):
         print("please enter a valid digit.")
 
-file = open("teta.csv", "r")
+file = open("model.csv", "r")
 
 reader = csv.reader(file)
 teta = np.array(next(reader)).astype(np.float)
@@ -25,4 +26,4 @@ norm = np.array(next(reader)).astype(np.float)
 mileage = float(mileage)
 
 print("Estimated price:",
-      teta[0] + teta[1] * ((mileage - norm[0]) / (norm[1] - norm[0])), "€")
+      '%.2f' % (teta[0] + teta[1] * ((mileage - norm[0]) / (norm[1] - norm[0]))), "€")
